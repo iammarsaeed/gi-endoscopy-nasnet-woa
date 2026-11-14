@@ -1,0 +1,11 @@
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+data/
+results*/
+bbhe_samples/
+*.npy
+*.npz
+*.zip
+*.png
