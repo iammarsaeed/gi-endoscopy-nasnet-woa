@@ -2,7 +2,7 @@
 
 Each model is fine-tuned from ImageNet weights on the training originals of a fold with on-the-fly rotation/flip
 augmentation (the same five transforms as the proposed pipeline), then evaluated on the non-augmented test fold.
-Usage: python baselines.py <data.npz> <folds.json> <out.json> <epochs> <model> [<model> ...]
+Usage: python -m deep_baselines.baselines <data.npz> <folds.json> <out.json> <epochs> <model> [<model> ...]
 """
 import json, sys, time
 import numpy as np

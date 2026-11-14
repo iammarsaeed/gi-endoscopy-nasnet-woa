@@ -6,7 +6,7 @@ Folds are defined on the 8,000 ORIGINAL images (stratified, seed 42). In each fo
   - feature selection (WOA and the comparison methods) uses training images only: its fitness is the error of a
     5-NN classifier on an inner stratified 80/20 split of the training originals;
   - the SVMs are trained on the selected training features and evaluated on the test fold.
-Usage: python run_cv.py <data.npz> <feats.npy> <out_dir> <n_jobs>
+Usage: python -m cross_validation.run_cv <data.npz> <feats.npy> <out_dir> <n_jobs>
 """
 import json, os, sys, time
 import numpy as np

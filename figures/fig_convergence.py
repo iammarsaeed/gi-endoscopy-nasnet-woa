@@ -1,6 +1,6 @@
 """Figure 12: convergence of the wrapper searches on the 200 ReliefF-ranked fused features.
 Mean over the five folds of the best fitness (Eq. 16, D = 200) found after each fitness evaluation.
-Usage: python fig_convergence.py <search_budget_dir> <twostage_pipeline_dir> <out.png>"""
+Usage: python -m figures.fig_convergence <search_budget_dir> <twostage_pipeline_dir> <out.png>"""
 import glob, json, sys
 import numpy as np
 import matplotlib

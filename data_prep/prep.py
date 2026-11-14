@@ -1,7 +1,7 @@
 """Step 1: extract Kvasir v2, verify every image against the official archive's CRC32 index,
 resize to 224x224, and build the BBHE stream.
 
-Usage: python prep.py <mirror.zip> <official_tail.bin> <out.npz>
+Usage: python -m data_prep.prep <mirror.zip> <official_tail.bin> <out.npz>
 """
 import io, os, struct, sys, zipfile, zlib
 from multiprocessing import Pool

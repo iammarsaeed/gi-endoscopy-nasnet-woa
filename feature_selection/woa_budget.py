@@ -1,14 +1,14 @@
 """Search budget of the wrapper methods on all 2,112 fused features with threshold binarization (positions in [0, 1],
 feature selected when above 0.5). Also provides Tracked, the fitness wrapper that records convergence curves and is used
 by the two-stage scripts.
-Usage: python woa_budget.py <data.npz> <feats_pattern> <out_dir> <n_jobs>
+Usage: python -m feature_selection.woa_budget <data.npz> <feats_pattern> <out_dir> <n_jobs>
 """
 import json, os, sys, time
 import numpy as np
 from joblib import Parallel, delayed
-import run_cv
-from run_cv import SEED, stream, Fitness
-from run_cv_ft import fit_eval
+from cross_validation import run_cv
+from cross_validation.run_cv import SEED, stream, Fitness
+from cross_validation.run_cv_ft import fit_eval
 
 BUDGETS = [(10, 20), (30, 50), (30, 100), (50, 100)]
 OTHERS = ['bpso', 'bgwo', 'ga']          # run at the largest budget for a fair comparison

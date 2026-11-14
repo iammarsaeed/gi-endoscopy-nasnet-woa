@@ -1,3 +1,6 @@
+"""Figure 2(b): one image per class before and after BBHE, with luminance (Y) histograms.
+Usage: python -m figures.bbhe_fig <samples_dir> <out.png>   (samples from python -m data_prep.fetch_samples)
+"""
 import sys, os
 import numpy as np
 from PIL import Image

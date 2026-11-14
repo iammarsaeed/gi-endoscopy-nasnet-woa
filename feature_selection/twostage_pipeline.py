@@ -3,16 +3,16 @@ transfer function (50 whales x 100 iterations, 5,050 fitness evaluations) search
 on feature selection (Experiment 4, ablation, comparison with ReliefF, BPSO, BGWO, GA and random search, frozen-feature
 control), writing task files that report.py turns into the tables and figures. All selection uses the training
 originals of each fold only. Configurations without selection (Experiments 1-3, PCA) are copied from run_cv_ft.py's output.
-Usage: python twostage_pipeline.py <data.npz> <feats_pattern> <frozen_feats.npy> <out_dir> <n_jobs>
+Usage: python -m feature_selection.twostage_pipeline <data.npz> <feats_pattern> <frozen_feats.npy> <out_dir> <n_jobs>
 """
-import json, os, shutil, sys, time
+import importlib, json, os, shutil, sys, time
 import numpy as np
 from joblib import Parallel, delayed
-import run_cv
-from run_cv import SEED, stream, relieff
-import run_cv_ft
-from woa_budget import Tracked
-import bwoa  # registers run_cv.bwoa and run_cv.rand
+from cross_validation import run_cv
+from cross_validation.run_cv import SEED, stream, relieff
+from cross_validation import run_cv_ft
+from feature_selection.woa_budget import Tracked
+from feature_selection import bwoa  # registers run_cv.bwoa and run_cv.rand
 
 K, POP, ITERS = 200, 50, 100
 KERNELS = run_cv.KERNELS
@@ -31,7 +31,7 @@ def select(pattern, y, tr, fold, base, method, out):
     cand = order[:K]
     run_cv.POP, run_cv.ITERS = POP, ITERS
     fit = Tracked(X[:, cand], yt); rng = np.random.default_rng(SEED + fold)
-    t = time.perf_counter(); mask = (getattr(__import__('bwoa'), method) if method in ('bwoa', 'rand') else getattr(run_cv, method))(fit, K, rng); wrap_s = time.perf_counter() - t
+    t = time.perf_counter(); mask = (getattr(importlib.import_module('feature_selection.bwoa'), method) if method in ('bwoa', 'rand') else getattr(run_cv, method))(fit, K, rng); wrap_s = time.perf_counter() - t
     r = dict(base=base, method=method, fold=fold, n=int(mask.sum()), rank_s=rank_s, wrap_s=wrap_s, seconds=rank_s + wrap_s,
              best_fitness=float(fit.best), evals=len(fit.curve), curve=[float(c) for c in fit.curve],
              idx=cand[mask].tolist(), order=order[:K].tolist())

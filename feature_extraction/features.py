@@ -2,7 +2,7 @@
 
 Augmentation (rotation and flipping): 0 = original, 1 = rot90, 2 = rot180, 3 = rot270, 4 = horizontal flip.
 BBHE commutes with these pixel rearrangements, so augmenting the BBHE stream equals BBHE of augmented images.
-Usage: python features.py <data.npz> <feats.npy>
+Usage: python -m feature_extraction.features <data.npz> <feats.npy>
 """
 import os, sys, time
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'

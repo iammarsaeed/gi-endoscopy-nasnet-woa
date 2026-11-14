@@ -1,5 +1,5 @@
 """Step 5: aggregate results -> summary.json, summary.md and figures.
-Usage: python report.py <data.npz> <results_dir> <fig_dir>
+Usage: python -m analysis.report <data.npz> <results_dir> <fig_dir>
 """
 import json, os, sys
 from collections import defaultdict

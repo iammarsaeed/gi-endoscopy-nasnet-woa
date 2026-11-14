@@ -4,13 +4,13 @@ For fold k: the network (ImageNet weights, new 8-class head) is fine-tuned on th
 each batch mixes original and BBHE images (50/50) with random rotation by 0/90/180/270 degrees or horizontal flip.
 Then pooled features are extracted for all 8,000 images x 5 versions x 2 streams with that fold's network
 (test images are only passed forward, never used for training). Saves data/feats_ft_fold{k}.npy (2, 5, 8000, 1056).
-Usage: python finetune_features.py <data.npz> <folds.json> <epochs> [fold ...]
+Usage: python -m feature_extraction.finetune_features <data.npz> <folds.json> <epochs> [fold ...]
 """
 import json, os, sys, time
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import numpy as np
 import tensorflow as tf
-from features import augment
+from feature_extraction.features import augment
 
 BS = 32
 

@@ -11,7 +11,7 @@ distribution as the initial population); the best mask is returned.
 Importing this module registers both functions in run_cv, so getattr(run_cv, 'bwoa') works.
 """
 import numpy as np
-import run_cv
+from cross_validation import run_cv
 
 
 def bwoa(fit, D, rng, b=1.0):

@@ -2,16 +2,16 @@
 features, the top 200 or the top 100 ReliefF features, with 10 x 20 up to 100 x 200 whales x iterations, plus random
 search with the same budget. Same folds, fitness (Eq. 16) and CB-SVM + test-time-augmentation evaluation as
 twostage_pipeline.py. Records the best fitness after every evaluation (convergence curves).
-Usage: python search_budget.py <data.npz> <feats_pattern> <out_dir> <n_jobs>
+Usage: python -m feature_selection.search_budget <data.npz> <feats_pattern> <out_dir> <n_jobs>
 """
-import json, os, sys, time
+import importlib, json, os, sys, time
 import numpy as np
 from joblib import Parallel, delayed
-import run_cv
-from run_cv import SEED, stream, relieff
-from run_cv_ft import fit_eval
-from woa_budget import Tracked
-import bwoa  # registers run_cv.bwoa and run_cv.rand
+from cross_validation import run_cv
+from cross_validation.run_cv import SEED, stream, relieff
+from cross_validation.run_cv_ft import fit_eval
+from feature_selection.woa_budget import Tracked
+from feature_selection import bwoa  # registers run_cv.bwoa and run_cv.rand
 
 # (K, method, agents, iterations); K = 2112 searches all fused features (no ReliefF stage)
 CONFIGS = [(200, 'bwoa', 30, 100), (200, 'bwoa', 50, 100), (200, 'bwoa', 50, 200), (200, 'bwoa', 100, 200),
@@ -36,7 +36,7 @@ def run_wrapper(pattern, y, tr, fold, order, K, method, pop, iters, out):
     cand = np.array(order[:K])
     F = np.load(pattern.format(k=fold), mmap_mode='r'); X = np.asarray(stream(F, 'fused')[0][tr][:, cand]); yt = y[tr]
     fit = Tracked(X, yt); rng = np.random.default_rng(SEED + fold); t = time.perf_counter()
-    mask = (getattr(__import__('bwoa'), method) if method in ('bwoa', 'rand') else getattr(run_cv, method))(fit, K, rng)
+    mask = (getattr(importlib.import_module('feature_selection.bwoa'), method) if method in ('bwoa', 'rand') else getattr(run_cv, method))(fit, K, rng)
     sec = time.perf_counter() - t; n = int(mask.sum())
     evals = len(fit.curve); best = float(fit.best)
     f_woa = float(fit(mask))

@@ -1,5 +1,5 @@
 """Extra statistics used in the paper that report.py does not produce (McNemar tests, paired t-tests, fitness comparisons).
-Usage: python twostage_stats.py <data.npz> <out.json>   (run after twostage_pipeline.py, search_budget.py and report.py)"""
+Usage: python -m analysis.twostage_stats <data.npz> <out.json>   (run after twostage_pipeline.py, search_budget.py and report.py)"""
 import json, sys
 import numpy as np
 from scipy import stats

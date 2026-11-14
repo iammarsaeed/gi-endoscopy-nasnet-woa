@@ -1,7 +1,7 @@
 """Step 3 (improved pipeline): same protocol and tasks as run_cv.py, but with per-fold fine-tuned NASNet-Mobile
 pooled features (data/feats_ft_fold{k}.npy) and test-time augmentation (TTA): SVM decision scores are averaged
 over the 5 rotated/flipped versions of each test image. Results without TTA are stored as *_single.
-Usage: python run_cv_ft.py <data.npz> <feats_pattern> <out_dir> <n_jobs>
+Usage: python -m cross_validation.run_cv_ft <data.npz> <feats_pattern> <out_dir> <n_jobs>
 """
 import json, os, sys, time, warnings
 import numpy as np
@@ -10,8 +10,8 @@ from sklearn.decomposition import PCA
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from sklearn.preprocessing import StandardScaler
-import run_cv
-from run_cv import SEED, KERNELS, stream, select, relieff, make_svm
+from cross_validation import run_cv
+from cross_validation.run_cv import SEED, KERNELS, stream, select, relieff, make_svm
 
 
 def metrics(yt, p):
